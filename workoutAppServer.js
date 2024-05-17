@@ -3,7 +3,7 @@ const axios = require("axios");
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-require("dotenv").config({ path: path.resolve(__dirname, 'credentialsDontPost/.env') })
+require("dotenv")
 const { MongoClient, ServerApiVersion, BSON } = require('mongodb');
 // #endregion
 
