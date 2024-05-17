@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Create Workout</title>
+        <link rel="stylesheet" href="/styles/stylesheet.css">
+    </head>
+    <body>
+        <script>
+            function addSet() {
+                document.getElementById("removeSetButton").style.display = "inline";
+                let wrapper = document.getElementById("setsContainer");
+                let currSetNum = wrapper.childElementCount;
+
+                let newSet = document.createElement("div");
+                newSet.setAttribute("class", "setInput");
+                
+                let exerciseName = document.createElement("input");
+                exerciseName.setAttribute("type", "text");
+                exerciseName.name = `exercise${currSetNum}`;
+                exerciseName.placeholder = "Exercise Name";
+                exerciseName.class = "setExerciseName";
+                exerciseName.required = true;
+
+                let weight = document.createElement("input");
+                weight.setAttribute("type", "number");
+                weight.setAttribute("name", `weight${currSetNum}`);
+                weight.setAttribute("class", "setWeight");
+                weight.setAttribute("value", 0);
+                weight.required = true;
+
+                let reps = document.createElement("input");
+                reps.setAttribute("type", "number");
+                reps.setAttribute("name", `rep${currSetNum}`);
+                reps.setAttribute("class", "setReps");
+                reps.setAttribute("value", 0);
+                reps.required = true;
+
+                newSet.appendChild(exerciseName);
+                newSet.appendChild(weight);
+                newSet.appendChild(reps);
+
+                wrapper.appendChild(newSet);
+            }
+
+            function removeSet() {
+                let wrapper = document.getElementById("setsContainer");
+                if (wrapper.childElementCount > 0) {
+                    wrapper.removeChild(wrapper.lastChild);
+                }
+
+                if (wrapper.childElementCount == 0) {
+                    document.getElementById("removeSetButton").style.display = "none";
+                }
+            }
+        </script>
+        <a href="/" style="text-decoration: none;">
+            <div class="title">
+                <h1>Nate's Fitness App</h1>
+            </div>
+        </a>
+        <div class="container">
+            <h1>Create Workout</h1>
+            <hr>
+            <form class="addForm" id="createWorkoutForm" action="/processCreateWorkout" method="post">
+                <label for="workoutName"><b>Workout Name</b></label>
+                <input type="text" name="workoutName" placeholder="Enter name" required>
+                <div id="setLabels">
+                    <p><b>Exercise</b></p>
+                    <p><b>Weight</b></p>
+                    <p><b>Reps</b></p>
+                </div>
+                <div id="setsContainer"></div>
+                <button type="button" class="button" id="addSetButton" onclick="addSet()">Add Set</button>
+                <button type="button" class="button" id="removeSetButton" onclick="removeSet()">Remove Set</button>
+                <br>
+                <input type="submit" class="button" value="Create Workout">
+            </form>
+        </div>
+    </body>
+</html>

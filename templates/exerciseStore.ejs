@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Exercises</title>
+        <link rel="stylesheet" href="/styles/stylesheet.css">
+    </head>
+    <body>
+        <script>
+            function openNewExerciseForm() {
+                document.getElementById("addExerciseForm").style.display = "block";
+                document.getElementById("addExerciseButton").style.display = "none";
+            }
+
+            function closeNewExerciseForm() {
+                document.getElementById("addExerciseForm").style.display = "none";
+                document.getElementById("addExerciseButton").style.display = "block";
+            }
+        </script>
+        <a href="/" style="text-decoration: none;">
+            <div class="title">
+                <h1>Nate's Fitness App</h1>
+            </div>
+        </a>
+        <div class="container">
+            <div class="header">
+                <h1>Exercises</h1>
+                <div id="searchContainer">
+                    <form action="/exercises" method="get">
+                        <input type="text" id="searchBar" name="exercise" placeholder="Search for exercises...">
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+            </div>
+            <h3>Custom Exercises</h3>
+            <hr>
+            <div id="mongoExercises">
+                <% if (mongoExercises.length === 0) { %>
+                    <p>No exercises found. Add new exercises now!</p>
+                <% } else { %>
+                    <table class="exerciseTable">
+                        <tr>
+                            <th>Name</th>
+                            <th>Body Part</th>
+                            <th>Target</th>
+                            <th>Category</th>
+                        </tr>
+                    <% mongoExercises.forEach(exercise => { %>
+                        <tr>
+                            <td><%- exercise.name %></td>
+                            <td><%- exercise.bodyPart %></td>
+                            <td><%- exercise.target %></td>
+                            <td><%- exercise.equipment %></td>
+                        </tr>
+                    <%} ); %>
+                    </table>
+                <% } %>
+            </div>
+            <br>
+            <button id="addExerciseButton" class="openFormButton" onclick="openNewExerciseForm()">Add New Exercise</button>
+            <form class="addForm" id="addExerciseForm" action="/addExercise" method="post">
+                <h3>Add New Exercises</h3>
+                <label for="name"><b>Name</b></label>
+                <input type="text" id="name" name="name" placeholder="Enter Name" required>
+                <label for="bodyPart"><b>Body Part</b></label>
+                <input type="text" id="bodyPart" name="bodyPart" placeholder="Enter Body Part" required>
+                <label for="target"><b>Target</b></label>
+                <%- targetsDropdown %>
+                <label for="equipment"><b>Equipment</b></label>
+                <%- equipmentDropdown %>
+                <input type="submit" class="button" value="Add">
+                <button type="reset" class="button cancel" onclick="closeNewExerciseForm()">Cancel</button>
+            </form>
+            <h3>General Exercises</h3>
+            <hr>
+            <div id="apiExercises">
+                <% if (apiExercises.length === 0) { %>
+                    <p>No exercises found.</p>
+                <% } else { %>
+                    <table border="1" class="exerciseTable">
+                        <tr>
+                            <th>Name</th>
+                            <th>Body Part</th>
+                            <th>Target</th>
+                            <th>Category</th>
+                        </tr>
+                    <% apiExercises.forEach(exercise => { %>
+                        <tr>
+                            <td><%- exercise.name %></td>
+                            <td><%- exercise.bodyPart %></td>
+                            <td><%- exercise.target %></td>
+                            <td><%- exercise.equipment %></td>
+                        </tr>
+                    <% }); %>
+                    </table>
+                <% } %>
+                <% if (offset > 0) { %>
+                    <a href="/exercises?exercise=<%- exerciseString %>&offset=<%- offset - limit %>" class="scrollButton">< Prev</a>
+                <% } %>
+                <% if (numApi === limit) { %>
+                    <a href="/exercises?exercise=<%- exerciseString %>&offset=<%- offset + limit %>" class="scrollButton">Next ></a>
+                <% } %>
+            </div>
+        </div>
+    </body>
+</html>

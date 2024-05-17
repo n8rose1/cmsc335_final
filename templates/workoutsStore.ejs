@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Workouts</title>
+        <link rel="stylesheet" href="/styles/stylesheet.css">
+    </head>
+    <body>
+        <a href="/" style="text-decoration: none;">
+            <div class="title">
+                <h1>Nate's Fitness App</h1>
+            </div>
+        </a>
+        <div class="container">
+            <div class="header">
+                <h1>Workouts</h1>
+                <div id="searchContainer">
+                    <form action="" method="get">
+                        <input type="text" id="searchBar" name="search" placeholder="Search for workouts...">
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="linkCardsContainer">
+                <% workouts.forEach(workout => { %>
+                    <a href="workoutView/<%- workout._id %>" style="text-decoration: none;">
+                        <div class="linkCard">
+                            <h2><%- workout.name %></h2>
+                        </div>
+                    </a>
+                <% }); %>
+                <a href="/createWorkout" style="text-decoration: none;">
+                    <div class="linkCard" id="addWorkoutButton">
+                        <h2>Add New Workout</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
